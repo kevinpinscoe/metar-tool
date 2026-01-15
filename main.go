@@ -20,7 +20,31 @@ func main() {
 	pretty := flag.Bool("pretty", false, "For --json: pretty-print JSON")
 	timeout := flag.Duration("timeout", 10*time.Second, "HTTP timeout (e.g. 5s, 10s)")
 	ua := flag.String("user-agent", "metar-tool/0.1 (contact: you@example.com)", "User-Agent to send to APIs")
+	output := flag.String("output", "", "Write normal output to this file (errors still go to stderr)")
+	verbose := flag.Bool("verbose", false, "Verbose logging to stderr")
 	flag.Parse()
+
+	// If present send stdout to a file
+	if strings.TrimSpace(*output) != "" {
+		f, err := os.Create(*output) // truncates if exists
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "ERROR: open output file: %v\n", err)
+			os.Exit(1)
+		}
+
+		// If verbose announce file name created
+		if *verbose {
+			fmt.Fprintf(os.Stderr, "Writing output to %s\n", *output)
+		}
+
+		defer func() {
+			if err := f.Close(); err != nil {
+				fmt.Fprintf(os.Stderr, "ERROR: close output file: %v\n", err)
+			}
+		}()
+
+		os.Stdout = f
+	}
 
 	// --obs takes precedence and doesn't require --forecast.
 	if strings.TrimSpace(*obs) != "" {
@@ -58,6 +82,9 @@ func usageAndExit(msg string) {
 	fmt.Fprintln(os.Stderr, "Usage:")
 	fmt.Fprintln(os.Stderr, "  metar-tool --obs <station>")
 	fmt.Fprintln(os.Stderr, "  metar-tool --forecast nws <wfo>")
+	fmt.Fprintln(os.Stderr, "Options:")
+	fmt.Fprintln(os.Stderr, "  --output <file> Write stdout to file")
+	fmt.Fprintln(os.Stderr, "  --verbose announce file created to stdout")
 	fmt.Fprintln(os.Stderr)
 	fmt.Fprintln(os.Stderr, "Examples:")
 	fmt.Fprintln(os.Stderr, "  metar-tool --obs KRDU")
@@ -65,6 +92,8 @@ func usageAndExit(msg string) {
 	fmt.Fprintln(os.Stderr, "  metar-tool --forecast nws kmrx")
 	fmt.Fprintln(os.Stderr, "  metar-tool --obs KTYS --json")
 	fmt.Fprintln(os.Stderr, "  metar-tool --obs KTYS --json --pretty")
+	fmt.Fprintln(os.Stderr, "  metar-tool --obs KTYS --json --pretty --output /tmp/ktys.json")
+	fmt.Fprintln(os.Stderr, "  metar-tool --forecast nws mrx --output /tmp/mrx-afd.txt")
 	os.Exit(2)
 }
 

@@ -2,8 +2,8 @@ BIN       := metar-tool
 PKG       := .
 BUILD_DIR := bin
 
-# You can override these:make install PREFIX=$HOME/.local
-PREFIX    ?= /usr/local
+# You can override these:make install PREFIX=/usr/local/bin
+PREFIX    ?= $(HOME)/.local
 BINDIR    ?= $(PREFIX)/bin
 
 GO        ?= go
@@ -21,7 +21,9 @@ build:
 run: build
 	./$(BUILD_DIR)/$(BIN) --forecast nws kmrx
 	./$(BUILD_DIR)/$(BIN) --obs ktys
+	./$(BUILD_DIR)/$(BIN) --obs ktys --output ktys
 	./$(BUILD_DIR)/$(BIN) --obs ktys --json
+	./$(BUILD_DIR)/$(BIN) --obs ktys --json --pretty
 
 
 fmt:
