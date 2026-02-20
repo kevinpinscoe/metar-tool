@@ -9,7 +9,9 @@ You can take the output and pipe or redirect it to a file for archiving.
 This is the initial draft. The next version will allow you to decode a METAR
 string to a full text description. This will allow you to run the tool against
 an archived or saved JSON file and decode it. The decoding will work on live
-data as well. You will even be able to `metar-tool --obs ktys --json | metar-tool --decode`.
+data as well. 
+
+You are even able to `metar-tool --obs ktys | metar-tool --decode`.
 
 ## Usage examples
 
@@ -88,7 +90,25 @@ Updated at 100 PM EST Wed Jan 14 2026
  # Add --verbose to have file name announced
  metar-tool --obs KTYS --output "ktys-$(date -u +%Y%m%d-%H%MZ).txt" --verbose
  Writing output to ktys-20260115-1337Z.txt
+
+# Piped decoding
+metar-tool --obs ktys
+METAR KTYS 200053Z 19007KT 10SM SCT065 SCT130 OVC250 19/13 A2969 RMK AO2 SLP046 T01940128
+
+metar-tool --obs ktys | bin/metar-tool --decode
+Station: KTYS
+Report: METAR
+Observed: 200053Z (DDHHMMZ)
+Wind: 190° at 07 kt
+Visibility: 10 statute miles
+Sky: Scattered clouds at 6500 ft AGL, Scattered clouds at 13000 ft AGL, Overcast at 25000 ft AGL
+Temp/Dew: 19°C / 13°C
+Altimeter: 29.69 inHg
+Remarks: AO2 SLP046 T01940128
+Raw: METAR KTYS 200053Z 19007KT 10SM SCT065 SCT130 OVC250 19/13 A2969 RMK AO2 SLP046 T01940128
 ```
+
+More work is needed in abbreviations and remarks.
 
 ## More about METAR
 
@@ -106,7 +126,6 @@ U.S. responsible for issuing timely, localized weather forecasts, watches, and w
 
 A list of WFO's with their designated codes can be found at https://www.weather.gov/nwr/wfo_nwr 
 
-
 ## Install
 
 `make install` by default will install into $HOME/.local.
@@ -115,4 +134,16 @@ To override this use something like `sudo make install PREFIX=/usr/local`
 
 ## Release
 
-A Github Actions is planned to create and tag releases for Linux, Mac, Raspberry Pi (ARM) and Windows 
+A Github Actions is planned. For now manual builds.
+
+## Roadmap
+
+- Github actions builds with package release (ARM64, Windows 11, MacOS Silicon)
+- NWS Weather Hazards text product (used by Skywarn to know when to activate)
+- Set default location (lat & long)
+- Decode airport and NWS WFO office abbreviations to human friendly locations
+- Sunrise, Sunset and Moon Phase for location or your default
+- Greyline times for location or your default
+- Tides low, high and current for location  or closest to your default
+- Hurricane tracking (TBA)
+- TBD
