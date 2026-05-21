@@ -1,0 +1,46 @@
+# yaml-language-server: $schema=https://goreleaser.com/static/schema.json
+version: 2
+
+builds:
+  - id: metar-tool
+    main: .
+    binary: metar-tool
+    goos: [linux, darwin]
+    goarch: [amd64, arm64]
+    ignore:
+      - goos: darwin
+        goarch: amd64
+    ldflags:
+      - -s -w -X main.version={{ .Version }}
+    env:
+      - CGO_ENABLED=0
+
+archives:
+  - id: metar-tool-archive
+    builds: [metar-tool]
+    name_template: "metar-tool-{{ .Os }}-{{ .Arch }}"
+    format: binary
+
+checksum:
+  name_template: "checksums.txt"
+
+signs:
+  - cmd: cosign
+    args:
+      - sign-blob
+      - --yes
+      - --output-signature=${signature}
+      - --output-certificate=${certificate}
+      - ${artifact}
+    artifacts: checksum
+    certificate: ${artifact}.pem
+    signature: ${artifact}.sig
+    output: true
+
+release:
+  github:
+    owner: kevinpinscoe
+    name: metar-tool
+  name_template: "v{{ .Version }}"
+  make_latest: true
+  generate_release_notes: true
