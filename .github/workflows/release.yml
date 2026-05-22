@@ -30,4 +30,25 @@ jobs:
           args: release --clean
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          HOMEBREW_TAP_TOKEN: ${{ secrets.HOMEBREW_TAP_TOKEN }}
           COSIGN_EXPERIMENTAL: "1"
+
+      - name: Notify apt repo
+        run: |
+          gh api repos/kevinpinscoe/apt/dispatches \
+            --method POST \
+            --field event_type=new-release \
+            --field client_payload[repo]="${{ github.repository }}" \
+            --field client_payload[tag]="${{ github.ref_name }}"
+        env:
+          GH_TOKEN: ${{ secrets.REPO_DISPATCH_TOKEN }}
+
+      - name: Notify rpm repo
+        run: |
+          gh api repos/kevinpinscoe/rpm/dispatches \
+            --method POST \
+            --field event_type=new-release \
+            --field client_payload[repo]="${{ github.repository }}" \
+            --field client_payload[tag]="${{ github.ref_name }}"
+        env:
+          GH_TOKEN: ${{ secrets.REPO_DISPATCH_TOKEN }}

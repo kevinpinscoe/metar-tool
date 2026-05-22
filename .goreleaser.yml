@@ -21,6 +21,31 @@ archives:
     name_template: "metar-tool-{{ .Os }}-{{ .Arch }}"
     format: binary
 
+nfpms:
+  - id: metar-tool-packages
+    package_name: metar-tool
+    vendor: Kevin P. Inscoe
+    homepage: https://github.com/kevinpinscoe/metar-tool
+    maintainer: Kevin P. Inscoe <kevin.inscoe@gmail.com>
+    description: METAR aviation weather decoder
+    license: MIT
+    formats: [deb, rpm]
+    bindir: /usr/bin
+    builds: [metar-tool]
+
+brews:
+  - name: metar-tool
+    repository:
+      owner: kevinpinscoe
+      name: homebrew-tap
+      token: "{{ .Env.HOMEBREW_TAP_TOKEN }}"
+    directory: Formula
+    homepage: https://github.com/kevinpinscoe/metar-tool
+    description: METAR aviation weather decoder
+    license: MIT
+    test: |
+      system "#{bin}/metar-tool", "--help"
+
 checksum:
   name_template: "checksums.txt"
 
