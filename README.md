@@ -137,6 +137,13 @@ brew tap kevinpinscoe/homebrew-tap
 brew install metar-tool
 ```
 
+#### Scoop (Windows)
+
+```powershell
+scoop bucket add kevinpinscoe https://github.com/kevinpinscoe/scoop-bucket
+scoop install metar-tool
+```
+
 #### APT (Debian/Ubuntu)
 
 ```bash
@@ -167,7 +174,7 @@ To override this use something like `sudo make install PREFIX=/usr/local`
 
 ## Release
 
-Releases are published automatically via GitHub Actions. Binaries for Linux (amd64, arm64) and macOS (arm64) are built and signed on every version tag.
+Releases are published automatically via GitHub Actions. Binaries for Linux (amd64, arm64), macOS (arm64), and Windows (amd64) are built and signed on every version tag.
 
 ## Roadmap
 
