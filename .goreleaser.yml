@@ -5,7 +5,7 @@ builds:
   - id: metar-tool
     main: .
     binary: metar-tool
-    goos: [linux, darwin]
+    goos: [linux, darwin, windows]
     goarch: [amd64, arm64]
     ignore:
       - goos: darwin
@@ -20,6 +20,9 @@ archives:
     builds: [metar-tool]
     name_template: "metar-tool-{{ .Os }}-{{ .Arch }}"
     format: binary
+    format_overrides:
+      - goos: windows
+        formats: [zip]
 
 nfpms:
   - id: metar-tool-packages
@@ -45,6 +48,17 @@ brews:
     license: MIT
     test: |
       system "#{bin}/metar-tool", "--help"
+
+scoops:
+  - name: metar-tool
+    repository:
+      owner: kevinpinscoe
+      name: scoop-bucket
+      token: "{{ .Env.SCOOP_BUCKET_TOKEN }}"
+    directory: bucket
+    homepage: https://github.com/kevinpinscoe/metar-tool
+    description: METAR aviation weather decoder
+    license: MIT
 
 checksum:
   name_template: "checksums.txt"
