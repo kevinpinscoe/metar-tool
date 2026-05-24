@@ -167,11 +167,11 @@ To override this use something like `sudo make install PREFIX=/usr/local`
 
 ## Release
 
-A Github Actions is planned. For now manual builds.
+Releases are published automatically via GitHub Actions. Binaries for Linux (amd64, arm64) and macOS (arm64) are built and signed on every version tag.
 
 ## Roadmap
 
-- Github actions builds with package release (ARM64, Windows 11, MacOS Silicon)
+- ~~Github actions builds with package release (ARM64, Windows 11, MacOS Silicon)~~
 - NWS Weather Hazards text product (used by Skywarn to know when to activate)
 - Set default location (lat & long)
 - Decode airport and NWS WFO office abbreviations to human friendly locations
