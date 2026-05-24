@@ -51,16 +51,13 @@ checksum:
 
 signs:
   - cmd: cosign
+    signature: "${artifact}.sigstore.json"
     args:
       - sign-blob
-      - --yes
-      - --output-signature=${signature}
-      - --output-certificate=${certificate}
-      - ${artifact}
+      - "--bundle=${signature}"
+      - "${artifact}"
+      - "--yes"
     artifacts: checksum
-    certificate: ${artifact}.pem
-    signature: ${artifact}.sig
-    output: true
 
 release:
   github:
