@@ -128,6 +128,39 @@ A list of WFO's with their designated codes can be found at https://www.weather.
 
 ## Install
 
+### Package managers
+
+#### Homebrew (macOS/Linux)
+
+```bash
+brew tap kevinpinscoe/homebrew-tap
+brew install metar-tool
+```
+
+#### APT (Debian/Ubuntu)
+
+```bash
+curl -sL https://kevinpinscoe.github.io/apt/gpg.key \
+  | sudo gpg --dearmor -o /etc/apt/keyrings/kevinpinscoe.gpg
+
+echo "deb [signed-by=/etc/apt/keyrings/kevinpinscoe.gpg] \
+  https://kevinpinscoe.github.io/apt stable main" \
+  | sudo tee /etc/apt/sources.list.d/kevinpinscoe.list
+
+sudo apt update
+sudo apt install metar-tool
+```
+
+#### DNF (Fedora/RHEL)
+
+```bash
+sudo curl -fsSL https://kevinpinscoe.github.io/rpm/kevinpinscoe.repo \
+  -o /etc/yum.repos.d/kevinpinscoe.repo
+sudo dnf install metar-tool
+```
+
+### Compile from source
+
 `make install` by default will install into $HOME/.local.
 
 To override this use something like `sudo make install PREFIX=/usr/local`
