@@ -19,9 +19,9 @@ builds:
 
 archives:
   - id: metar-tool-archive
-    builds: [metar-tool]
+    ids: [metar-tool]
     name_template: "metar-tool-{{ .Os }}-{{ .Arch }}"
-    format: binary
+    formats: [binary]
     format_overrides:
       - goos: windows
         formats: [zip]
@@ -36,7 +36,7 @@ nfpms:
     license: MIT
     formats: [deb, rpm]
     bindir: /usr/bin
-    builds: [metar-tool]
+    ids: [metar-tool]
 
 brews:
   - name: metar-tool
