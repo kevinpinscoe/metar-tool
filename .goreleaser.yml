@@ -75,6 +75,37 @@ signs:
       - "--yes"
     artifacts: checksum
 
+changelog:
+  # Build release notes from GitHub's compare API so entries link to their PRs
+  # instead of printing bare 40-character commit SHAs.
+  use: github
+  sort: asc
+  groups:
+    # Security fixes lead so a reader can tell at a glance whether a release
+    # carries one — this backs the supported-versions promise in SECURITY.md.
+    - title: "⚠️ Security fixes"
+      regexp: '(?i)^.*?(sec|vuln)(\([[:word:]]+\))??!?:.+$'
+      order: 0
+    - title: "Breaking changes"
+      regexp: '(?i)^.*?[[:word:]]+(\([[:word:]]+\))?!:.+$'
+      order: 1
+    - title: "New features"
+      regexp: '(?i)^.*?feat(\([[:word:]]+\))??!?:.+$'
+      order: 2
+    - title: "Bug fixes"
+      regexp: '(?i)^.*?fix(\([[:word:]]+\))??!?:.+$'
+      order: 3
+    - title: "Other changes"
+      order: 999
+  filters:
+    exclude:
+      - '^docs:'
+      - '^test:'
+      - '^chore:'
+      - '^ci:'
+      - 'Merge pull request'
+      - 'Merge branch'
+
 release:
   github:
     owner: kevinpinscoe
