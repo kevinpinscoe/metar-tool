@@ -38,18 +38,20 @@ nfpms:
     bindir: /usr/bin
     ids: [metar-tool]
 
-brews:
+# `brews:` was deprecated in GoReleaser v2.10 and is slated for removal in
+# v2.16. Casks cover Linux as well as macOS since Homebrew/brew#19121 added
+# Linux binary support, so nothing is lost by moving off the formula.
+# There is no cask equivalent of a formula `test do` block.
+homebrew_casks:
   - name: metar-tool
     repository:
       owner: kevinpinscoe
       name: homebrew-tap
       token: "{{ .Env.HOMEBREW_TAP_TOKEN }}"
-    directory: Formula
+    directory: Casks
     homepage: https://github.com/kevinpinscoe/metar-tool
     description: METAR aviation weather decoder
     license: MIT
-    test: |
-      system "#{bin}/metar-tool", "--help"
 
 scoops:
   - name: metar-tool

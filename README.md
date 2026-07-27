@@ -134,7 +134,15 @@ A list of WFO's with their designated codes can be found at https://www.weather.
 
 ```bash
 brew tap kevinpinscoe/homebrew-tap
-brew install metar-tool
+brew install --cask metar-tool
+```
+
+Upgrading from a release before v1.1.2? This tool shipped as a formula until
+then. Remove the old one first — a formula and a cask of the same name cannot
+coexist:
+
+```bash
+brew uninstall metar-tool
 ```
 
 #### Scoop (Windows)
