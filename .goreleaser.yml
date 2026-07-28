@@ -64,6 +64,13 @@ scoops:
     description: METAR aviation weather decoder
     license: MIT
 
+sboms:
+  # Cataloguing the compiled binary rather than the source tree: syft reads the
+  # Go build info baked into it, so the SBOM lists what actually shipped.
+  # SBOMs land in checksums.txt, so the existing cosign signature covers them.
+  - id: metar-tool-sbom
+    artifacts: binary
+
 checksum:
   name_template: "checksums.txt"
 

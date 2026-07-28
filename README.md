@@ -195,3 +195,13 @@ Releases are published automatically via GitHub Actions. Binaries for Linux (amd
 - Tides low, high and current for location  or closest to your default
 - Hurricane tracking (TBA)
 - TBD
+
+## Security
+
+Release artifacts are cosign-signed and each release publishes an SPDX SBOM.
+See [SECURITY.md](SECURITY.md) for verification steps and how to report a
+vulnerability.
+
+## License
+
+MIT — see [LICENSE](LICENSE).
